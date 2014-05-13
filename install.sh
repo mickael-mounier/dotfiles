@@ -5,7 +5,7 @@ deploy() {
     local DST=$2
 
     for i in `find $SRC -maxdepth 1 -type f` ; do
-        DSTFILE=`basename $i`
+        DSTFILE=$DST/`basename $i`
         if [ -h "$DSTFILE" ] ; then
             echo "nothing to do for $DSTFILE"
             # FIXME: check if we use the right symlink
@@ -14,14 +14,13 @@ deploy() {
         else
             echo "linking $DSTFILE"
             ln -s "$i" "$DSTFILE"
-            true
         fi
     done
 
     for i in `find $SRC -mindepth 1 -maxdepth 1 -type d` ; do
-        DSTDIR=`basename $i`
-        test -d $DSTDIR || echo mkdir $DSTDIR
-        deploy $SRC/$DIRNAME $DSTDIR
+        DIRNAME=`basename $i`
+        test -d $DST/$DIRNAME || mkdir $DST/$DIRNAME
+        deploy $SRC/$DIRNAME $DST/$DIRNAME
     done
 }
 
