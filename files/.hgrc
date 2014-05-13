@@ -1,0 +1,12 @@
+[ui]
+username = Mandibull <mandibull@gmail.com>
+ignore = ~/.hgignore
+
+[extensions]
+hgext.graphlog =
+hgext.record =
+color =
+pager =
+
+[pager]
+pager = LESS='FSRX' less
