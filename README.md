@@ -11,4 +11,4 @@ There are some very precise configurations based upon the hostname.
 </ol>
 
 <h2>Contact</h2>
-Mail mandibull@gmail.com if you have any questions.
+Mail mandibull@gmail.com if you have any questions or suggestions :)
