@@ -19,10 +19,10 @@ deploy() {
     done
 }
 
-if [ x"$(dirname $0)" = x"." ] ; then
+if [ x"`dirname $0`" = x"." ] ; then
     FILESDIR="$PWD/files"
 else
-    FILESDIR="$PWD/$(dirname $0)/files"
+    FILESDIR="$PWD/`dirname $0`/files"
 fi
 
 deploy $FILESDIR $HOME
