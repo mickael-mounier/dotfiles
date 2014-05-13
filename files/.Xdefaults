@@ -1,0 +1,82 @@
+!emacs*dpi: 96
+emacs22.font: -misc-fixed-bold-*-normal-*-13-100-100-100-*-70-*-*
+emacs22.reverseVideo: true
+emacs23.font: -misc-fixed-bold-*-normal-*-13-100-100-100-*-70-*-*
+emacs23.reverseVideo: true
+emacs23_2.font: -misc-fixed-bold-*-normal-*-13-100-100-100-*-70-*-*
+emacs23_2.reverseVideo: true
+emacs23_4.font: -misc-fixed-bold-*-normal-*-13-100-100-100-*-70-*-*
+emacs23_4.reverseVideo: true
+emacs.font: -misc-fixed-bold-*-normal-*-13-100-100-100-*-70-*-*
+emacs.reverseVideo: true
+
+emacs*font: -misc-fixed-bold-*-normal-*-13-100-100-100-*-70-*-*
+emacs*reverseVideo: true
+
+
+ddd.font: -misc-fixed-bold-*-normal-*-13-100-100-100-*-70-*-*
+ddd.reverseVideo: true
+
+urxvt*font: -misc-fixed-bold-*-normal-*-13-100-100-100-*-70-*-*
+!urxvt*font:-*-*-bold-*-*-*-*-*-*-*-*-*-*-*
+urxvt*foreground: grey
+urxvt*background: black
+!urxvt*transparent: true
+urxvt*shading: 20
+urxvt*fading: 10
+urxvt*scrollBar: false
+urxvt.saveLines: 100000
+
+URxvt.perl-ext-common: tabbed
+URxvt.tabbed.tabbar-fg: 2
+URxvt.tabbed.tabbar-bg: 0
+URxvt.tabbed.tab-fg: 3
+URxvt.tabbed.tab-bg: 0
+
+!urxvt.cursorColor:     White
+!urxvt.cursorColor1:    Green
+urxvt*color0:    #2E3436
+urxvt*color1:    #CC0000
+urxvt*color2:    #4E9A06
+urxvt*color3:    #C4A000
+urxvt*color4:    #3465A4
+urxvt*color5:    #75507B
+urxvt*color6:    #06989A
+urxvt*color7:    #D3D7CF
+urxvt*color8:    #555753
+urxvt*color9:    #EF2929
+urxvt*color10:   #8AE234
+urxvt*color11:   #FCE94F
+urxvt*color12:   #729FCF
+urxvt*color13:   #AD7FA8
+urxvt*color14:   #AD7FA8
+urxvt*color15:   #EEEEEC
+
+
+!xterm*font:-dejavu-dejavu sans mono-bold-r-*-*-*-*-*-*-*-*-*-*
+xterm*foreground: grey
+xterm*background: black
+!xterm*transparent: true
+xterm*shading: 20
+xterm*fading: 10
+xterm*scrollBar: false
+xterm.saveLines: 100000
+
+!xterm.cursorColor:     White
+!xterm.cursorColor1:    Green
+xterm*color0:    #2E3436
+xterm*color1:    #CC0000
+xterm*color2:    #4E9A06
+xterm*color3:    #C4A000
+xterm*color4:    #3465A4
+xterm*color5:    #75507B
+xterm*color6:    #06989A
+xterm*color7:    #D3D7CF
+xterm*color8:    #555753
+xterm*color9:    #EF2929
+xterm*color10:   #8AE234
+xterm*color11:   #FCE94F
+xterm*color12:   #729FCF
+xterm*color13:   #AD7FA8
+xterm*color14:   #AD7FA8
+xterm*color15:   #EEEEEC
