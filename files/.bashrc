@@ -33,7 +33,7 @@ esac
 # export GNOME_DISABLE_CRASH_DIALOG=1
 
 test $(which emacs)                && export EDITOR='emacs'
-test $(which emacs)                && alias  a="emacs"
+test $(which emacs)                && alias  e="emacs"
 test $(which yaourt)               && alias  pacman="yaourt"
 test $(which colormake)            && alias  make="colormake"
 test $(which python)               && alias  py="python"

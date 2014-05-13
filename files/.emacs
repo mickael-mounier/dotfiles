@@ -1,10 +1,12 @@
+(setq warning-minimum-level :error)
+
 ;============================
 ; Emacs customization script
 ;============================
 
 (normal-erase-is-backspace-mode t)
 (setq inhibit-startup-message t)      ; don't show the GNU splash screen
-(scroll-bar-mode -1)                 ; no scroll bar
+(scroll-bar-mode -1)                  ; no scroll bar
 (menu-bar-mode -1)                    ; no menu bar
 (tool-bar-mode -1)                    ; no tool bar
 (setq frame-title-format "%b")        ; titlebar shows buffer's name
@@ -15,9 +17,6 @@
 (delete-selection-mode t)             ; typing removes highlighted text
 (line-number-mode t)                  ; display line number in modeline
 (column-number-mode t)                ; display column number in modeline
-;(setq display-time-day-and-date t)    ; display date in modeline
-;(setq display-time-24hr-format t)     ; european 24h format
-;(display-time)                        ; display time in modeline
 (auto-compression-mode t)             ; open compressed files
 (mouse-wheel-mode t)                  ; enable mouse wheel
 (fset 'yes-or-no-p 'y-or-n-p)         ; y or n will do
@@ -45,7 +44,6 @@
        c-font-lock-extra-types))
 
 ; key bindings
-
 (global-set-key [f1] 'replace-regexp)
 (global-set-key [f2] 'undo)
 (global-set-key [f3] 'eshell)
@@ -58,7 +56,7 @@
 (global-set-key [f11] 'compile)
 (global-set-key [f12] 'replace-string)
 
-;; pour que la fenetre de compilation ne soit pas trop grande
+; small compilation window
 (setq compilation-window-height 15)
 (setq compilation-scroll-output t)
 
@@ -179,12 +177,6 @@
   (local-set-key "\M-q" 'rebox-comment))
 (autoload 'rebox-comment "rebox" nil t)
 (autoload 'rebox-region "rebox" nil t)
-
-;;
-;; Programation modes
-;;
-(load-file "~/.emacs.d/std_comment.el")
-(load-file "~/.emacs.d/div.el")
 
 ; Our own modes repository
 ;; load files
@@ -312,4 +304,3 @@ both nil)))
 (setq mumamo-background-colors nil)
 
 (global-linum-mode t)
-(setq warning-minimum-level :error)
