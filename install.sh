@@ -3,12 +3,13 @@
 deploy() {
     for i in `find $1 -maxdepth 1 -type f` ; do
         DSTFILE="$2/`basename $i`"
+        PDSTFILE="\033[36m`echo $DSTFILE | sed -e "s|$HOME|~|"`\033[0m"
         if [ -h "$DSTFILE" ] ; then
-            echo "nothing to do for $DSTFILE" # TODO: check if we use the right symlink
+            echo "$PDSTFILE" # TODO: check if we use the right symlink
         elif [ -f "$DSTFILE" ] ; then
-            echo "warning: $DSTFILE already exists, please get rid of it and restart this script"
+            echo "WARNING: $PDSTFILE file already exists, delete it to use the dotfile version"
         else
-            echo "linking $DSTFILE"
+            echo "NEW: $PDSTFILE"
             ln -s "$i" "$DSTFILE"
         fi
     done
