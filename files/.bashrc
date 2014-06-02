@@ -10,7 +10,6 @@ case $HOSTNAME in
     shodan) # Home
         ;;
     mmounier) # ETAI
-        echo TOTO
         export JAVA_HOME="$HOME/apps/jdk1.7.0_51"
         export JAVA="$JAVA_HOME/bin/java"
         # export CATALINA_HOME="$HOME/apps/apache-tomcat-7.0.52"
