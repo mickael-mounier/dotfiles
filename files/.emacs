@@ -307,14 +307,21 @@ both nil)))
 (global-linum-mode t)
 (global-hl-line-mode t)
 
-(defun find-file-at-point-with-line()
-  "if file has an attached line num goto that line, ie boom.rb:12"
-  (interactive)
-  (setq line-num 0)
-  (save-excursion
-    (search-forward-regexp "[^ ]:" (point-max) t)
-    (if (looking-at "[0-9]+")
-        (setq line-num (string-to-number (buffer-substring (match-beginning 0) (match-end 0))))))
-  (find-file-at-point)
-  (if (not (equal line-num 0))
-      (goto-line line-num)))
+;; Open files and goto lines like we see from g++ etc. i.e. file:line#
+;; (to-do "make `find-file-line-number' work for emacsclient as well")
+;; (to-do "make `find-file-line-number' check if the file exists")
+(defadvice find-file (around find-file-line-number
+                             (filename &optional wildcards)
+                             activate)
+  "Turn files like file.cpp:14 into file.cpp and going to the 14-th line."
+  (save-match-data
+    (let* ((matched (string-match "^\\(.*\\):\\([0-9]+\\):?$" filename))
+           (line-number (and matched
+                             (match-string 2 filename)
+                             (string-to-number (match-string 2 filename))))
+           (filename (if matched (match-string 1 filename) filename)))
+      ad-do-it
+      (when line-number
+        ;; goto-line is for interactive use
+        (goto-char (point-min))
+        (forward-line (1- line-number))))))
