@@ -1,5 +1,4 @@
 [ui]
-username = Mandibull <mandibull@gmail.com>
 ignore = ~/.hgignore
 
 [extensions]
@@ -10,3 +9,5 @@ pager =
 
 [pager]
 pager = LESS='FSRX' less
+
+%include ~/.hgrc.d/local.rc
