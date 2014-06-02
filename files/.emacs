@@ -1,4 +1,4 @@
-(setq warning-minimum-level :error)
+(setq warning-minimum-level :error) ; ewww!
 
 ;============================
 ; Emacs customization script
@@ -287,20 +287,34 @@ both nil)))
 (add-to-list 'auto-mode-alist '("\\.lol$" . lol-mode))
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
  '(css-color-global-mode t)
  '(nxhtml-default-encoding (quote utf-8))
  '(tabkey2-mode t))
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(highlight ((((class color) (min-colors 88) (background dark)) (:background "#202020"))))
  '(linum ((t (:inherit org-agenda-dimmed-todo-face)))))
 
 (setq mumamo-background-colors nil)
 
 (global-linum-mode t)
+(global-hl-line-mode t)
+
+(defun find-file-at-point-with-line()
+  "if file has an attached line num goto that line, ie boom.rb:12"
+  (interactive)
+  (setq line-num 0)
+  (save-excursion
+    (search-forward-regexp "[^ ]:" (point-max) t)
+    (if (looking-at "[0-9]+")
+        (setq line-num (string-to-number (buffer-substring (match-beginning 0) (match-end 0))))))
+  (find-file-at-point)
+  (if (not (equal line-num 0))
+      (goto-line line-num)))
