@@ -10,6 +10,7 @@ case $HOSTNAME in
     shodan) # Home
         ;;
     mmounier) # ETAI
+        echo TOTO
         export JAVA_HOME="$HOME/apps/jdk1.7.0_51"
         export JAVA="$JAVA_HOME/bin/java"
         # export CATALINA_HOME="$HOME/apps/apache-tomcat-7.0.52"
@@ -25,7 +26,7 @@ case $HOSTNAME in
             $HOME/bin/setlayout 0 4 4 0
         fi
 
-        VIRTUAL_ENV_DISABLE_PROMPT=1 test -x "$HOME/work/virtualenv/bin/activate" && source "$HOME/work/virtualenv/bin/activate"
+        test -f "$HOME/work/virtualenv/bin/activate" && VIRTUAL_ENV_DISABLE_PROMPT=1 source "$HOME/work/virtualenv/bin/activate"
         ;;
 esac
 
@@ -149,6 +150,7 @@ ex=01;32:\
 *.hxx=01;33:\
 *.c=01;37:\
 *.cc=01;37:\
+*.py=01;37:\
 *.ll=01;37:\
 *.l=01;37:\
 *.yy=01;37:\
@@ -158,6 +160,7 @@ ex=01;32:\
 *.cxx=01;37:\
 *.vcproj=01;92;40:\
 *.o=00;37:\
+*.pyc=00;37:\
 *.oo=00;37:\
 *.lo=00;37:\
 *.a=01;31:\
