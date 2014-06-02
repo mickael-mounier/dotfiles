@@ -33,20 +33,20 @@ esac
 # export MALLOC_OPTIONS=J
 # export GNOME_DISABLE_CRASH_DIALOG=1
 
-test $(which emacs)                && export EDITOR='emacs'
-test $(which emacs)                && alias  e="emacs"
-test $(which yaourt)               && alias  pacman="yaourt"
-test $(which colormake)            && alias  make="colormake"
-test $(which python)               && alias  py="python"
-test $(which svn)                  && alias  svnst="svn st --ignore-externals -q"
-test $(which xscreensaver-command) && alias  lock="xscreensaver-command -lock"
+command -v emacs                >/dev/null 2>&1 && export EDITOR='emacs'
+command -v emacs                >/dev/null 2>&1 && alias  e="emacs"
+command -v yaourt               >/dev/null 2>&1 && alias  pacman="yaourt"
+command -v colormake            >/dev/null 2>&1 && alias  make="colormake"
+command -v python               >/dev/null 2>&1 && alias  py="python"
+command -v svn                  >/dev/null 2>&1 && alias  svnst="svn st --ignore-externals -q"
+command -v xscreensaver-command >/dev/null 2>&1 && alias  lock="xscreensaver-command -lock"
 
-alias   l="\ls -hlGLX --color --group-directories-first --ignore='*.pyc'"
-alias  ll="\ls -halX --color --group-directories-first"
-alias llr="\ls -halXR --color --group-directories-first"
-alias llt="\ls -halXrt --color --group-directories-first"
-alias  lr="\ls -hlGLXR --color --group-directories-first  --ignore='*.pyc'"
-alias  ls="\ls -hlGLX --color --group-directories-first  --ignore='*.pyc'"
+alias   l="\ls -hlGLX   --color --group-directories-first --ignore='*.pyc'"
+alias  ll="\ls -halX    --color --group-directories-first"
+alias llr="\ls -halXR   --color --group-directories-first"
+alias llt="\ls -halXrt  --color --group-directories-first"
+alias  lr="\ls -hlGLXR  --color --group-directories-first --ignore='*.pyc'"
+alias  ls="\ls -hlGLX   --color --group-directories-first --ignore='*.pyc'"
 alias  lt="\ls -hlGLXrt --color --group-directories-first --ignore='*.pyc'"
 
 export LS_COLORS="\
