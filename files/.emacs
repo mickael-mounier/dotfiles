@@ -46,7 +46,7 @@
 ; key bindings
 (global-set-key [f1] 'replace-regexp)
 (global-set-key [f2] 'undo)
-(global-set-key [f3] 'eshell)
+(global-set-key [f3] 'search-selection) ; (global-set-key [f3] 'eshell)
 (global-set-key [f4] 'kill-this-buffer)
 (global-set-key [f6] 'yic-next-buffer)
 (global-set-key [f5] 'yic-prev-buffer)
@@ -325,3 +325,16 @@ both nil)))
         ;; goto-line is for interactive use
         (goto-char (point-min))
         (forward-line (1- line-number))))))
+
+
+(defun search-selection (beg end)
+  "search for selected text"
+  (interactive "r")
+  (let (
+        (selection (buffer-substring-no-properties beg end))
+        )
+    (deactivate-mark)
+    (isearch-mode t nil nil nil)
+    (isearch-yank-string selection)
+    )
+  )
