@@ -338,3 +338,6 @@ both nil)))
     (isearch-yank-string selection)
     )
   )
+
+(package-initialize)
+(elpy-enable)
