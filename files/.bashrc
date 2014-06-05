@@ -17,6 +17,7 @@ case $HOSTNAME in
         export ORACLE_HOME="/usr/lib/oracle/11.2/client64"
         export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$ORACLE_HOME/lib"
         export PATH="$JAVA_HOME/bin:$PATH"
+        export WORKON_HOME="$HOME/work/virtualenv"
 
         if [ x"$DISPLAY" != x"" ] ; then
             xrdb -merge ~/.Xdefaults
@@ -25,7 +26,7 @@ case $HOSTNAME in
             $HOME/bin/setlayout 0 4 4 0
         fi
 
-        test -f "$HOME/work/virtualenv/bin/activate" && VIRTUAL_ENV_DISABLE_PROMPT=1 source "$HOME/work/virtualenv/bin/activate"
+        test -f "$WORKON_HOME/bin/activate" && VIRTUAL_ENV_DISABLE_PROMPT=1 source "$WORKON_HOME/bin/activate"
         ;;
 esac
 
