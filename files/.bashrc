@@ -45,8 +45,8 @@ function prepend_to_var()
     echo $RES
 }
 
-test -d /usr/local/lib && export LD_LIBRARY_PATH=$(append_to_var  /usr/local/lib $LD_LIBRARY_PATH)
-test -d $HOME/bin      && export PATH=$(prepend_to_var $HOME/bin      $PATH)
+test -d /usr/local/lib && export LD_LIBRARY_PATH=$(append_to_var /usr/local/lib $LD_LIBRARY_PATH)
+test -d $HOME/bin      && export PATH=$(prepend_to_var $HOME/bin $PATH)
 
 function __prompt_command() {
     local EXIT="$?"

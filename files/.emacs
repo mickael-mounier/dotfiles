@@ -229,7 +229,7 @@ both nil)))
 (put 'upcase-region 'disabled nil)
 
 ;; nxHTML
-(load "~/.emacs.d/nxhtml/autostart.el")
+;(load "~/.emacs.d/nxhtml/autostart.el")
 
 (custom-set-variables
  '(css-color-global-mode t)
@@ -238,13 +238,15 @@ both nil)))
 
 (custom-set-faces
  '(highlight ((((class color) (min-colors 88) (background dark)) (:background "#202020"))))
- '(linum ((t (:inherit org-agenda-dimmed-todo-face)))))
+)
 
 (setq mumamo-background-colors nil)
 
 ; linum
 (global-linum-mode t)
 (global-hl-line-mode t)
+(set-face-attribute 'linum nil :foreground "#666666")
+(set-face-attribute 'linum nil :background "#000000")
 
 ;; Open files and goto lines like we see from g++ etc. i.e. file:line#
 (defadvice find-file (around find-file-line-number
@@ -277,5 +279,5 @@ both nil)))
   )
 
 ; elpy python
-(package-initialize)
-(elpy-enable)
+;(package-initialize)
+;(elpy-enable)
