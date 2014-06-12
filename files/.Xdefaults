@@ -1,5 +1,7 @@
 emacs*font: -misc-fixed-bold-*-normal-*-13-100-100-100-*-70-*-1
 emacs*reverseVideo: true
+emacs23*font: -misc-fixed-bold-*-normal-*-13-100-100-100-*-70-*-1
+emacs23*reverseVideo: true
 
 ddd*font: -misc-fixed-bold-*-normal-*-13-100-100-100-*-70-*-1
 ddd*reverseVideo: true

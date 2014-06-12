@@ -1,5 +1,3 @@
-(setq warning-minimum-level :error) ; ewww!
-
 ;============================
 ; Emacs customization script
 ;============================
@@ -31,7 +29,6 @@
 (setq vc-follow-symlinks t)
 
 ; C mode
-; (add-hook 'c-mode-hook 'rm-trailing-spaces-always)
 (c-set-offset 'substatement-open 0)   ; change '{' indentation
 (c-set-offset 'case-label '+)         ; make each case line indent from switch
 (setq c-font-lock-extra-types
@@ -44,9 +41,9 @@
        c-font-lock-extra-types))
 
 ; key bindings
-(global-set-key [f1] 'replace-regexp)
-(global-set-key [f2] 'undo)
-(global-set-key [f3] 'search-selection) ; (global-set-key [f3] 'eshell)
+(global-set-key [f1] 'replace-regexp) ; FIXME: change to hide/show trailing
+(global-set-key [f2] 'undo)           ; FIXME: change to hide/show tabs
+(global-set-key [f3] 'search-selection)
 (global-set-key [f4] 'kill-this-buffer)
 (global-set-key [f6] 'yic-next-buffer)
 (global-set-key [f5] 'yic-prev-buffer)
@@ -55,14 +52,12 @@
 (global-set-key [f10] 'recompile)
 (global-set-key [f11] 'compile)
 (global-set-key [f12] 'replace-string)
+(global-set-key [C-f12] 'replace-regex)
 
 ; small compilation window
-(setq compilation-window-height 15)
+(setq compilation-window-height 20)
 (setq compilation-scroll-output t)
 
-(if (display-graphic-p)
-    (global-set-key [(control z)] 'undo)                ; undo only in graphic mode
-)
 (global-set-key [C-home] 'beginning-of-buffer)          ; go to the beginning of buffer
 (global-set-key [C-end] 'end-of-buffer)                 ; go to the end of buffer
 (global-set-key [(meta g)] 'goto-line)                  ; goto line #
@@ -111,26 +106,6 @@
   [(control w)]
   'isearch-yank-word)                                   ; yank word from buffer
 
-;; Count nb lines
-(defun rec-lines (count)
-  (forward-line count)
-  (when (not (= (char-after) (if (= count 1) ?} ?{)))
-    (rec-lines count)
-    )
-  (point)
-  )
-(defun lines ()
-  "Count number of lines of a C function"
-  (interactive)
-  (let ((old-pt (point))
-        (pt1 (rec-lines 1))
-        (pt2 (rec-lines -1)))
-    (goto-char old-pt)
-    (message (format "Lines : %d" (1- (count-lines pt1 pt2))))
-    )
-  )
-(global-set-key "\C-x\C-l" 'lines)
-
 (defun yic-ignore (str)
   (or
    (string-match "\\*Buffer List\\*" str)
@@ -171,23 +146,8 @@
   (bury-buffer (current-buffer))
   (yic-next (buffer-list)))
 
-
-(add-hook 'c-mode-hook 'fp-c-mode-routine)
-(defun fp-c-mode-routine ()
-  (local-set-key "\M-q" 'rebox-comment))
-(autoload 'rebox-comment "rebox" nil t)
-(autoload 'rebox-region "rebox" nil t)
-
 ; Our own modes repository
-;; load files
-;(setq load-path (nconc '( "~/.emacs.d/") load-path))
 (setq load-path (cons "~/.emacs.d/" load-path))
-
-; Ruby!!
-;(autoload 'ruby-mode "ruby-mode" "Ruby editing mode." t)
-;(add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
-;(add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
-
 
 ; Flex
 (autoload 'flex-mode "flex-mode" "flex editing mode." t)
@@ -205,20 +165,7 @@
 (setq auto-mode-alist
       (cons '("\\.xml" . sgml-mode) auto-mode-alist))
 
-
-;;;;;;;;;;;;
-;; COLORS ;;
-;(add-to-list 'load-path "~/.emacs.d/color-theme")
-;(autoload 'color-theme "color-theme" "Color themes." t)
-;(require 'color-theme)
-;(color-theme-initialize)
-;(color-theme-deep-blue)
-
-(setq c-basic-offset 4)
-
-;(require 'completion-ui)
-
-;; ------------ C Mode
+; C/C++
 (defun my-cpp-highlight ()
 (setq cpp-known-face '(background-color . "dim gray"))
 (setq cpp-unknown-face 'default)
@@ -240,6 +187,8 @@ both nil)))
 (defun my-c-mode-common-hook ()
 (my-cpp-highlight)
 )
+
+(setq c-basic-offset 4)
 
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 
@@ -282,34 +231,22 @@ both nil)))
 ;; nxHTML
 (load "~/.emacs.d/nxhtml/autostart.el")
 
-;; lol-mode
-(autoload 'lol-mode "lol-mode" "LOL editing mode." t)
-(add-to-list 'auto-mode-alist '("\\.lol$" . lol-mode))
-
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
  '(css-color-global-mode t)
  '(nxhtml-default-encoding (quote utf-8))
  '(tabkey2-mode t))
+
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
  '(highlight ((((class color) (min-colors 88) (background dark)) (:background "#202020"))))
  '(linum ((t (:inherit org-agenda-dimmed-todo-face)))))
 
 (setq mumamo-background-colors nil)
 
+; linum
 (global-linum-mode t)
 (global-hl-line-mode t)
 
 ;; Open files and goto lines like we see from g++ etc. i.e. file:line#
-;; (to-do "make `find-file-line-number' work for emacsclient as well")
-;; (to-do "make `find-file-line-number' check if the file exists")
 (defadvice find-file (around find-file-line-number
                              (filename &optional wildcards)
                              activate)
@@ -339,5 +276,6 @@ both nil)))
     )
   )
 
+; elpy python
 (package-initialize)
 (elpy-enable)
