@@ -45,18 +45,16 @@ function prepend_to_var()
     echo $RES
 }
 
-test -d /usr/local/lib && export LD_LIBRARY_PATH=$(append_to_var /usr/local/lib $LD_LIBRARY_PATH)
-test -d $HOME/bin      && export PATH=$(prepend_to_var $HOME/bin $PATH)
+test -d /usr/local/lib  && export LD_LIBRARY_PATH=$(append_to_var /usr/local/lib $LD_LIBRARY_PATH)
+test -d $HOME/local/lib && export LD_LIBRARY_PATH=$(append_to_var $HOME/local/lib $LD_LIBRARY_PATH)
+test -d /usr/local/bin  && export PATH=$(append_to_var /usr/local/bin $PATH)
+test -d $HOME/local/bin && export PATH=$(append_to_var $HOME/loca/bin $PATH)
+test -d $HOME/bin       && export PATH=$(prepend_to_var $HOME/bin $PATH)
 
 function __prompt_command() {
     local EXIT="$?"
-
     PS1="\[\e[36;1m\]\j \[\e[32;1m\]\u\[\e[37;0m\]@\[\e[33;1m\]\h \[\e[34;1m\]\w"
-
-    if [ $EXIT != 0 ]; then
-        PS1+=" \e[31;1m$EXIT\e[0;0m"
-    fi
-
+    test $EXIT != 0 && PS1="$PS1 \e[31;1m$EXIT\e[0;0m"
     PS1="$PS1 \[\e[35;1m\]> \[\e[37;0m\]"
 }
 
@@ -74,7 +72,7 @@ case $HOSTNAME in
         export CATALINA_HOME="$HOME/apps/apache-tomcat-5.5.36"
         export ORACLE_HOME="/usr/lib/oracle/11.2/client64"
         export LD_LIBRARY_PATH=$(append_to_var  $ORACLE_HOME/lib $LD_LIBRARY_PATH)
-        export PATH=$(prepend_to_var $JAVA_HOME/bin   $PATH)
+        export PATH=$(prepend_to_var $JAVA_HOME/bin $PATH)
         export WORKON_HOME="$HOME/work/virtualenv"
 
         if [ x"$DISPLAY" != x"" ] ; then

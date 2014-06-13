@@ -1,0 +1,3 @@
+#!/bin/sh
+TMP=`mktemp`
+rst2pdf $1 -o $TMP && evince $TMP ; rm $TMP

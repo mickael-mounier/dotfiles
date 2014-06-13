@@ -1,0 +1,2 @@
+#!/bin/sh
+jobs -p | xargs kill -9

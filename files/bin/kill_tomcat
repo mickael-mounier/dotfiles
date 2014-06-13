@@ -1,0 +1,4 @@
+#!/bin/sh
+for i in `ps auxww | grep [t]omcat | cut -f2 -d" "` ; do echo "killing $i" ; kill -9 $i ; done
+for i in `netstat -tlnp | awk '/:8009 */ {split($NF,a,"/"); print a[1]}'` ; do echo "killing $i" ; kill -9 $i ; done
+for i in `netstat -tlnp | awk '/:8080 */ {split($NF,a,"/"); print a[1]}'` ; do echo "killing $i" ; kill -9 $i ; done
