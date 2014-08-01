@@ -209,6 +209,9 @@ both nil)))
 (add-to-list 'auto-mode-alist '("\\.mako$" . html-mode))
 ;; .less -> css-mode
 (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
+;; .sls -> yaml-mode
+(add-to-list 'auto-mode-alist '("\\.sls$" . yaml-mode))
+
 
 ;; insert-BOM
 (defun insert-BOM()
@@ -279,5 +282,13 @@ both nil)))
   )
 
 ; elpy python
-;(package-initialize)
-;(elpy-enable)
+(package-initialize)
+(elpy-enable)
+
+; package archives
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
+; for teh lulz
+(require 'nyan-mode)
+(nyan-mode 1)
