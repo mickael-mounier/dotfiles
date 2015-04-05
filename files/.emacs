@@ -2,6 +2,9 @@
 ; Emacs customization script
 ;============================
 
+(add-to-list 'load-path "~/.emacs.d/")
+
+
 (normal-erase-is-backspace-mode t)
 (setq inhibit-startup-message t)      ; don't show the GNU splash screen
 (scroll-bar-mode -1)                  ; no scroll bar
@@ -27,6 +30,8 @@
 (setq next-line-add-newlines nil)     ; prevents new line after eof
 (setq-default show-trailing-whitespace t)
 (setq vc-follow-symlinks t)
+
+(set-background-color "black")
 
 ; C mode
 (c-set-offset 'substatement-open 0)   ; change '{' indentation
@@ -145,9 +150,6 @@
   (interactive)
   (bury-buffer (current-buffer))
   (yic-next (buffer-list)))
-
-; Our own modes repository
-(setq load-path (cons "~/.emacs.d/" load-path))
 
 ; Flex
 (autoload 'flex-mode "flex-mode" "flex editing mode." t)
@@ -281,3 +283,12 @@ both nil)))
 ; elpy python
 ;(package-initialize)
 ;(elpy-enable)
+
+(setq js-indent-level 2)
+(setq css-indent-level 2)
+(add-to-list 'auto-mode-alist '("\\.js$" . js-mode))
+
+(require 'jade-mode)
+(require 'sws-mode)
+(add-to-list 'auto-mode-alist '("\\.jade$" . jade-mode))
+(add-to-list 'auto-mode-alist '("\\.sws$" . sws-mode))
