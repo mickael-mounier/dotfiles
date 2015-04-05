@@ -1,0 +1,25 @@
+#!/bin/sh
+
+test $# -le 1 && exit 1
+
+SUBJECT=$1
+shift
+
+CMD=$@
+
+started=`date`
+eval $@
+res=$?
+ended=`date`
+
+mail -s "$SUBJECT" mandibull@gmail.com <<EOF
+name: $SUBJECT
+
+command: $CMD
+exit code: $res
+
+started: $started
+ended: $ended
+EOF
+
+exit $?

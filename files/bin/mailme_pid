@@ -1,0 +1,29 @@
+#!/bin/sh
+
+test $# -ne 2 && exit 1
+
+PID=$1
+
+SUBJECT="PID $PID stopped running"
+test $# -eq 2 && SUBJECT=$2
+
+test `ps -p $PID | wc -l` -ne 2 && echo "error: no PID $PID" && exit 2
+
+CMD=`ps -p $PID | tail -n 1 | cut -f4 -d' '`
+
+echo "Starting to watch..."
+
+started=`date`
+while [ `ps -p $PID | wc -l` -eq 2 ] ; do sleep 2 ; done
+ended=`date`
+
+echo "Process ended!"
+
+mail -s "$SUBJECT" mandibull@gmail.com <<EOF
+name: $SUBJECT
+
+command: $CMD
+
+watch started: $started
+watch ended: $ended
+EOF
