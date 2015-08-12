@@ -51,29 +51,30 @@ test -d $HOME/node_modules/.bin && export PATH=$(prepend_to_var $HOME/node_modul
 test -d $HOME/local/bin         && export PATH=$(append_to_var $HOME/loca/bin $PATH)
 test -d $HOME/bin               && export PATH=$(prepend_to_var $HOME/bin $PATH)
 
-function __prompt_command() {
-    local EXIT="$?"
-    PS1="\[\e[36;1m\]\j \[\e[32;1m\]\u\[\e[37;0m\]@\[\e[33;1m\]\h \[\e[34;1m\]\w"
-    test $EXIT != 0 && PS1="$PS1 \e[31;1m$EXIT\e[0;0m"
-    PS1="$PS1 \[\e[35;1m\]> \[\e[37;0m\]"
-}
-
-export PROMPT_COMMAND=__prompt_command
-export TERM=xterm
-
 case $HOSTNAME in
-    shodan) # Home
-        export WORKON_HOME="$HOME/virtualenv"
+    shodan)
+        export TERM=xterm
+        source /usr/share/bash-completion/completions/git
         ;;
-    mmounier) # ETAI
+    archvm)
+        export TERM=xterm
+        export CUSTOM_http_proxy="http://proxy.mdc.ubisoft.org:3128"
+        export CUSTOM_https_proxy="http://proxy.mdc.ubisoft.org:3128"
+        source /usr/share/bash-completion/completions/git
+        ;;
+    MTL-BD205)
+        alias emacs=emacs.bat
+        export CUSTOM_http_proxy="http://proxy.mdc.ubisoft.org:3128"
+        export CUSTOM_https_proxy="http://proxy.mdc.ubisoft.org:3128"
+        ;;
+    mmounier)
+        export TERM=xterm
         export JAVA_HOME="$HOME/apps/jdk1.7.0_51"
         export JAVA="$JAVA_HOME/bin/java"
-        # export CATALINA_HOME="$HOME/apps/apache-tomcat-7.0.52"
         export CATALINA_HOME="$HOME/apps/apache-tomcat-5.5.36"
         export ORACLE_HOME="/usr/lib/oracle/11.2/client64"
         export LD_LIBRARY_PATH=$(append_to_var  $ORACLE_HOME/lib $LD_LIBRARY_PATH)
         export PATH=$(prepend_to_var $JAVA_HOME/bin $PATH)
-        export WORKON_HOME="$HOME/work/virtualenv"
 
         if [ x"$DISPLAY" != x"" ] ; then
             xrdb -merge ~/.Xdefaults
@@ -84,7 +85,48 @@ case $HOSTNAME in
         ;;
 esac
 
-test x"$WORKON_HOME" != x"" && test -f "$WORKON_HOME/bin/activate" && VIRTUAL_ENV_DISABLE_PROMPT=1 source "$WORKON_HOME/bin/activate"
+# Proxy management
+export ORGINAL_http_proxy=$http_proxy
+export ORGINAL_https_proxy=$https_proxy
+export CUSTOM_http_proxy=$http_proxy # This will be customized later if needed
+export CUSTOM_http_proxy=$http_proxy # This will be customized later if needed
+
+function proxy_on()
+{
+    export http_proxy=$CUSTOM_http_proxy
+    export https_proxy=$CUSTOM_https_proxy
+}
+
+function proxy_off()
+{
+    export http_proxy=$ORIGINAL_http_proxy
+    export https_proxy=$ORIGINAL_https_proxy
+}
+
+function __parse_git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+}
+
+function __prompt_command() {
+    local EXIT="$?"
+    PS1=""
+    CURR_COUNT=0
+    CURR_VENV=$(basename "$VIRTUAL_ENV")
+    test x"$VIRTUAL_ENV" != x"" && CURR_COUNT=$(($CURR_COUNT+1))
+    CURR_GIT_BRANCH=$(__parse_git_branch)
+    test x"$CURR_GIT_BRANCH" != x"" && CURR_COUNT=$(($CURR_COUNT+1))
+    test $CURR_COUNT -gt 0 && PS1="$PS1("
+    test x"$CURR_VENV" != x"" && PS1="${PS1}\[\e[34;1m\]$CURR_VENV\[\e[0;0m\]"
+    test $CURR_COUNT -gt 1 && PS1="$PS1|" # FIXME: not good!
+    test x"$CURR_GIT_BRANCH" != x"" && PS1="${PS1}\[\e[34;1m\]$CURR_GIT_BRANCH\[\e[0;0m\]"
+    test $CURR_COUNT -gt 0 && PS1="$PS1) "
+
+    PS1="$PS1\[\e[36;1m\]\j \[\e[32;1m\]\u\[\e[37;0m\]@\[\e[33;1m\]\h \[\e[34;1m\]\w"
+    test $EXIT != 0 && PS1="$PS1 \e[31;1m$EXIT\e[0;0m"
+    PS1="$PS1 \[\e[35;1m\]> \[\e[37;0m\]"
+}
+
+export PROMPT_COMMAND=__prompt_command
 
 # export MALLOC_OPTIONS=J
 # export GNOME_DISABLE_CRASH_DIALOG=1
