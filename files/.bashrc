@@ -91,11 +91,13 @@ test x"$WORKON_HOME" != x"" && test -f "$WORKON_HOME/bin/activate" && VIRTUAL_EN
 
 command -v emacs                >/dev/null 2>&1 && export EDITOR="emacs"
 command -v emacs                >/dev/null 2>&1 && alias  e="emacs"
-command -v yaourt               >/dev/null 2>&1 && alias  pacman="yaourt"
+command -v yaourt               >/dev/null 2>&1 && alias  yaourt="yaourt --aur-url https://aur4.archlinux.org"
+command -v yaourt               >/dev/null 2>&1 && alias  pacman="yaourt --aur-url https://aur4.archlinux.org"
 command -v colormake            >/dev/null 2>&1 && alias  make="colormake"
 command -v python               >/dev/null 2>&1 && alias  py="python"
 command -v svn                  >/dev/null 2>&1 && alias  svnst="svn st --ignore-externals -q"
 command -v xscreensaver-command >/dev/null 2>&1 && alias  lock="xscreensaver-command -lock"
+command -v ssh                  >/dev/null 2>&1 && alias  sshx="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 
 alias   l="\ls -hlGLX   --color --group-directories-first --ignore='*.pyc'"
 alias  ll="\ls -halX    --color --group-directories-first"
