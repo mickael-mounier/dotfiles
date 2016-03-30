@@ -2,7 +2,7 @@
 ; Emacs customization script
 ;============================
 
-(add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "~/.emacs.d/lisp")
 
 
 (normal-erase-is-backspace-mode t)
@@ -32,6 +32,7 @@
 (setq vc-follow-symlinks t)
 
 (set-background-color "black")
+(set-foreground-color "white")
 
 ; C mode
 (c-set-offset 'substatement-open 0)   ; change '{' indentation
@@ -284,7 +285,7 @@ both nil)))
   )
 
 ; elpy python
-<<<<<<< HEAD
+
 ;(package-initialize)
 ;(elpy-enable)
 
@@ -292,18 +293,9 @@ both nil)))
 (setq css-indent-level 2)
 (add-to-list 'auto-mode-alist '("\\.js$" . js-mode))
 
-(require 'jade-mode)
-(require 'sws-mode)
-(add-to-list 'auto-mode-alist '("\\.jade$" . jade-mode))
-(add-to-list 'auto-mode-alist '("\\.sws$" . sws-mode))
-
 (package-initialize)
-(elpy-enable)
+;(elpy-enable)
 
 ; package archives
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-
-; for teh lulz
-(require 'nyan-mode)
-(nyan-mode 1)
