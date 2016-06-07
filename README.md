@@ -2,7 +2,7 @@
 Dotfiles
 ========
 
-This project is just a collection of dotfiles and scripts for my different GNU/Linux computers.
+This project is just a collection of dotfiles and scripts for my different computers.
 
 Installation
 ============
@@ -14,6 +14,4 @@ TODO
 ====
  - add git config
  - split .bashrc
- - implement emacs optional packages loading
- - rename .emacs to .myemacs and load it from .emacs
  - store MATE desktop configuration (if doable)
