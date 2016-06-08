@@ -5,11 +5,15 @@ deploy() {
         DSTFILE="$2/`basename $i`"
         PDSTFILE="\033[36m`echo $DSTFILE | sed -e "s|$HOME|~|"`\033[0m"
         if [ -h "$DSTFILE" ] ; then
-            echo "$PDSTFILE" # TODO: check if we use the right symlink
+            if [ x"$(readlink -f $DSTFILE)" != x"$i" ] ; then
+                echo -e "WARNING: $PDSTFILE symlink already exists but is different, delete it to use the dotfile version"
+            else
+                echo -e "$PDSTFILE"
+            fi
         elif [ -f "$DSTFILE" ] ; then
-            echo "WARNING: $PDSTFILE file already exists, delete it to use the dotfile version"
+            echo -e "WARNING: $PDSTFILE file already exists, delete it to use the dotfile version"
         else
-            echo "NEW: $PDSTFILE"
+            echo -e "NEW: $PDSTFILE"
             ln -s "$i" "$DSTFILE"
         fi
     done
