@@ -1,0 +1,26 @@
+REGEDIT4
+#-----
+# Set up the handler and icon
+#-----
+[HKEY_CLASSES_ROOT\EmacsFile]
+@="Emacs File"
+"Content Type"="text/plain"
+
+[HKEY_CLASSES_ROOT\EmacsFile\shell]
+[HKEY_CLASSES_ROOT\EmacsFile\shell\open]
+# This gets displayed in context menu
+@="Open in Emacs"
+
+[HKEY_CLASSES_ROOT\EmacsFile\shell\open\command]
+@="\"C:\\Program Files (x86)\\GNU Emacs 24.5\\bin\\launch-emacs-client.vbs\" \"%1\""
+
+[HKEY_CLASSES_ROOT\EmacsFile\DefaultIcon]
+@="\"C:\\Program Files (x86)\\GNU Emacs 24.5\\bin\\runemacs.exe\",0"
+
+[HKEY_CLASSES_ROOT\*\shell]
+
+[HKEY_CLASSES_ROOT\*\shell\openwemacs]
+@="Open with Emacs"
+
+[HKEY_CLASSES_ROOT\*\shell\openwemacs\command]
+@="Wscript.exe \"C:\\Program Files (x86)\\GNU Emacs 24.5\\bin\\launch-emacs-client.vbs\" \"%1\""
