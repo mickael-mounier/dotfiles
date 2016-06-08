@@ -1,2 +1,2 @@
 xrdb -merge ~/.Xresources
-exec openbox-session
+command -v VBoxClient-all >/dev/null 2>&1 && VBoxClient-all
