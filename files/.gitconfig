@@ -1,5 +1,5 @@
-[user]
-	email = mandibull@gmail.com
-	name = Mandibull
+[include]
+    path = ~/.gitconfig.local
+
 [push]
-	default = simple
+    default = simple
