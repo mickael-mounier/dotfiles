@@ -50,11 +50,11 @@ function prepend_to_var()
     echo $RES
 }
 
-test -d /usr/local/lib          && export LD_LIBRARY_PATH=$(append_to_var /usr/local/lib $LD_LIBRARY_PATH)
-test -d /usr/local/bin          && export PATH=$(append_to_var /usr/local/bin $PATH)
-test -d $HOME/node_modules/.bin && export PATH=$(prepend_to_var $HOME/node_modules/.bin $PATH)
-test -d $HOME/local/bin         && export PATH=$(append_to_var $HOME/loca/bin $PATH)
-test -d $HOME/bin               && export PATH=$(prepend_to_var $HOME/bin $PATH)
+test -d /usr/local/lib          && export LD_LIBRARY_PATH=$(append_to_var "/usr/local/lib" '$LD_LIBRARY_PATH')
+test -d /usr/local/bin          && export PATH=$(append_to_var "/usr/local/bin" "$PATH")
+test -d $HOME/node_modules/.bin && export PATH=$(prepend_to_var "$HOME/node_modules/.bin" "$PATH")
+test -d $HOME/local/bin         && export PATH=$(append_to_var "$HOME/loca/bin" "$PATH")
+test -d $HOME/bin               && export PATH=$(prepend_to_var "$HOME/bin" "$PATH")
 
 function __prompt_command() {
     local EXIT="$?"
@@ -105,39 +105,6 @@ function poff()
 # EDITOR
 command -v emacs >/dev/null 2>&1 && export EDITOR="emacs"
 
-case $HOSTNAME in
-    shodan)     # Home
-        export TERM=xterm
-        export WORKON_HOME="$HOME/virtualenv"
-        ;;
-    MTL-BD205) # Ubisoft
-        alias emacs=emacs.bat
-        export EDITOR="emacs.bat"
-        export WORKON_HOME="/f/work/virtualenv"
-        export CUSTOM_httpproxy="http://proxy.mtl.ubisoft.com:3128"
-        export CUSTOM_httpsproxy="$http_proxy"
-        export DJANGO_SETTINGS_MODULE="settings.test_settings"
-        # export no_proxy=".onbe,.ubisoft.org"
-        ;;
-    mmounier)  # ETAI
-        export JAVA_HOME="$HOME/apps/jdk1.7.0_51"
-        export JAVA="$JAVA_HOME/bin/java"
-        # export CATALINA_HOME="$HOME/apps/apache-tomcat-7.0.52"
-        export CATALINA_HOME="$HOME/apps/apache-tomcat-5.5.36"
-        export ORACLE_HOME="/usr/lib/oracle/11.2/client64"
-        export LD_LIBRARY_PATH=$(append_to_var  $ORACLE_HOME/lib $LD_LIBRARY_PATH)
-        export PATH=$(prepend_to_var $JAVA_HOME/bin $PATH)
-        export WORKON_HOME="$HOME/work/virtualenv"
-
-        if [ x"$DISPLAY" != x"" ] ; then
-            xrdb -merge ~/.Xdefaults
-            xrandr --auto --output VGA1 --mode 1280x1024 --right-of HDMI1
-            xrandr --auto --output HDMI1 --mode 1920x1080 --left-of VGA1
-            $HOME/bin/setlayout 0 4 4 0
-        fi
-        ;;
-esac
-
 # Bash history settings
 shopt -s histappend                  # Append to history file
 export HISTFILESIZE=                 # Unlimited history size
@@ -157,7 +124,6 @@ test x"$WORKON_HOME" != x"" && test -f "$WORKON_HOME/bin/activate" && VIRTUAL_EN
 # export GNOME_DISABLE_CRASH_DIALOG=1
 
 # Aliases
-
 command -v emacs                >/dev/null 2>&1 && alias e="emacs"
 command -v yaourt               >/dev/null 2>&1 && alias pacman="yaourt"
 command -v colormake            >/dev/null 2>&1 && alias make="colormake"
