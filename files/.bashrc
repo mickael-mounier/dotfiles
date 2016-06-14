@@ -6,6 +6,16 @@ function title()
     echo -ne "\033]0;$*\007"
 }
 
+function contains() {
+    string="$1"
+    substring="$2"
+    if test "${string#*$substring}" != "$string" ; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 function append_to_var()
 {
     RES=""
@@ -56,11 +66,13 @@ test -d $HOME/node_modules/.bin && export PATH=$(prepend_to_var "$HOME/node_modu
 test -d $HOME/local/bin         && export PATH=$(append_to_var "$HOME/loca/bin" "$PATH")
 test -d $HOME/bin               && export PATH=$(prepend_to_var "$HOME/bin" "$PATH")
 
+test -f /usr/share/git/completion/git-prompt.sh && source /usr/share/git/completion/git-prompt.sh
+contains $SHELL 'bash' && test -f /usr/share/git/completion/git-completion.bash && source /usr/share/git/completion/git-completion.bash
+
+# FIXME: this function blows
 function __prompt_command() {
     local EXIT="$?"
     history -a  # Save command in history file
-    # history -c  # Clear in-memory history
-    # history -r  # Reload history file
     PS1=""
     CURR_COUNT=0
     if [ x"$VIRTUAL_ENV" != x"" ] ; then
