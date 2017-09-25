@@ -1,11 +1,6 @@
 # Check for an interactive session
 test -z "$PS1" && return
 
-function title()
-{
-    echo -ne "\033]0;$*\007"
-}
-
 function contains() {
     string="$1"
     substring="$2"
@@ -16,61 +11,13 @@ function contains() {
     fi
 }
 
-function append_to_var()
-{
-    RES=""
-    OLD_IFS=$IFS
-    IFS=":"
-    for i in $2 ; do
-        test x"$i" == x"$1" && continue
-        if [ x"$RES" != x"" ] ; then
-            RES="$RES:$i"
-        else
-            RES="$i"
-        fi
-    done
-    IFS=$OLD_IFS
-    if [ x"$RES" != x"" ] ; then
-        RES="$RES:$1"
-    else
-        RES="$1"
-    fi
-    echo $RES
-}
-
-function prepend_to_var()
-{
-    RES=""
-    OLD_IFS=$IFS
-    IFS=":"
-    for i in $2 ; do
-        test x"$i" == x"$1" && continue
-        if [ x"$RES" != x"" ] ; then
-            RES="$RES:$i"
-        else
-            RES="$i"
-        fi
-    done
-    IFS=$OLD_IFS
-    if [ x"$RES" != x"" ] ; then
-        RES="$1:$RES"
-    else
-        RES="$1"
-    fi
-    echo $RES
-}
-
-test -d /usr/local/lib          && export LD_LIBRARY_PATH=$(append_to_var "/usr/local/lib" '$LD_LIBRARY_PATH')
-test -d /usr/local/bin          && export PATH=$(append_to_var "/usr/local/bin" "$PATH")
-test -d $HOME/node_modules/.bin && export PATH=$(prepend_to_var "$HOME/node_modules/.bin" "$PATH")
-test -d $HOME/local/bin         && export PATH=$(append_to_var "$HOME/loca/bin" "$PATH")
-test -d $HOME/bin               && export PATH=$(prepend_to_var "$HOME/bin" "$PATH")
-
+# Git completion
 test -f /usr/share/git/completion/git-prompt.sh && source /usr/share/git/completion/git-prompt.sh
 contains $SHELL 'bash' && test -f /usr/share/git/completion/git-completion.bash && source /usr/share/git/completion/git-completion.bash
 
-# FIXME: this function blows
+# Prompt
 function __prompt_command() {
+    # FIXME: this function blows
     local EXIT="$?"
     history -a  # Save command in history file
     PS1=""
@@ -79,7 +26,7 @@ function __prompt_command() {
         CURR_VENV="`basename \"$VIRTUAL_ENV\"`"
         CURR_COUNT=$(($CURR_COUNT+1))
     fi
-    if type __git_ps1 | \grep -q 'function' 2>/dev/null; then
+    if type __git_ps1 2>/dev/null | \grep -q 'function' 2>/dev/null; then
         CURR_GIT_HEAD="`__git_ps1 | tr -d '() '`"
         CURR_COUNT=$(($CURR_COUNT+1))
     fi
@@ -96,7 +43,7 @@ function __prompt_command() {
 
 export PROMPT_COMMAND=__prompt_command
 
-# Proxy management
+# Ghetto proxy management
 export ORGINAL_httpproxy=$http_proxy
 export ORGINAL_httpsproxy=$https_proxy
 export CUSTOM_httpproxy=$http_proxy   # This will be customized later if needed
@@ -126,11 +73,9 @@ export HISTIGNORE='ls:bg:fg:history' # Commands to ignore
 export HISTTIMEFORMAT='%F %T '       # Prepend easy to parse timestamps
 shopt -s cmdhist                     # Multiline commands on a single history line
 
-# Load local settings
-test -f ~/.bashrc_local && source ~/.bashrc_local
-
+# Virtualenv
 test x"$WORKON_HOME" != x"" && test -f "$WORKON_HOME/bin/activate" && VIRTUAL_ENV_DISABLE_PROMPT=1 source "$WORKON_HOME/bin/activate"
-# FIXME: make it work on windows venvs!
+# FIXME: make it work for windows!
 
 # export MALLOC_OPTIONS=J
 # export GNOME_DISABLE_CRASH_DIALOG=1
@@ -140,7 +85,6 @@ command -v emacs                >/dev/null 2>&1 && alias e="emacs"
 command -v yaourt               >/dev/null 2>&1 && alias pacman="yaourt"
 command -v colormake            >/dev/null 2>&1 && alias make="colormake"
 command -v python               >/dev/null 2>&1 && alias py="python"
-command -v svn                  >/dev/null 2>&1 && alias svnst="svn st --ignore-externals -q"
 command -v xscreensaver-command >/dev/null 2>&1 && alias lock="xscreensaver-command -lock"
 command -v git                  >/dev/null 2>&1 && alias git_amend='GIT_COMMITTER_DATE="`date`" git commit --amend --date "`date`"'
 
@@ -150,13 +94,28 @@ alias grep="\grep --color"
 alias g="grep"
 
 # ls configuration
-alias   l="\ls -hlGLX   --color --group-directories-first --ignore='*.pyc'"
-alias  ll="\ls -halX    --color --group-directories-first"
-alias llr="\ls -halXR   --color --group-directories-first"
-alias llt="\ls -halXrt  --color --group-directories-first"
-alias  lr="\ls -hlGLXR  --color --group-directories-first --ignore='*.pyc'"
-alias  ls="\ls -hlGLX   --color --group-directories-first --ignore='*.pyc'"
-alias  lt="\ls -hlGLXrt --color --group-directories-first --ignore='*.pyc'"
+LS_BIN="ls"
+command -v gls >/dev/null 2>&1 && LS_BIN="gls"
+
+if $LS_BIN --color -d . >/dev/null 2>&1; then
+    LS_TYPE="GNU"
+elif $LS_BIN -G -d . >/dev/null 2>&1; then
+    LS_TYPE="BSD"
+fi
+
+case $LS_TYPE in
+    GNU)
+        LS_OPTS='-X --group-directories-first --color'
+        ;;
+    BSD)
+        LS_OPTS='-G'
+        ;;
+esac
+
+alias   l="\\$LS_BIN $LS_OPTS -hlL"
+alias  ll="\\$LS_BIN $LS_OPTS -hal"
+alias  ls="\\$LS_BIN $LS_OPTS -hlL"
+alias  lt="\\$LS_BIN $LS_OPTS -hlLrt"
 
 export LS_COLORS="\
 *.7z=01;31:\
@@ -249,7 +208,11 @@ export LS_COLORS="\
 *.wmv=01;35:\
 *.xbm=01;35:\
 *.xcf=01;35:\
-*.xml=01;36:\
+*.cfg=01;36:\
+*.conf=01;36:\
+*.json=01;36:\
+*.yaml=01;36:\
+*.yml=01;36:\
 *.xpm=01;35:\
 *.xwd=01;35:\
 *.y=01;37:\
@@ -274,3 +237,9 @@ so=01;35:\
 st=37;44:\
 su=37;41:\
 tw=30;42:"
+
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced
+
+# Load local settings
+test -f ~/.bashrc_local && source ~/.bashrc_local
